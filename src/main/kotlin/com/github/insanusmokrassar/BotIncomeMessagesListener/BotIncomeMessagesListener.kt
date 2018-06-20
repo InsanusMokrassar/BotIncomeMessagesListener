@@ -1,121 +1,124 @@
 package com.github.insanusmokrassar.BotIncomeMessagesListener
 
+import com.github.insanusmokrassar.BotIncomeMessagesListener.UpdatesHandlers.*
 import com.github.insanusmokrassar.IObjectK.interfaces.IObject
-import com.github.insanusmokrassar.IObjectKRealisations.toIObject
 import com.pengrad.telegrambot.TelegramBot
 import com.pengrad.telegrambot.UpdatesListener
+import com.pengrad.telegrambot.model.*
+import kotlinx.coroutines.experimental.*
 import java.util.logging.Logger
 
-typealias UpdateCallback = (updateId: Int, message: IObject<Any>) -> Unit
-typealias MediaGroupCallback = (mediaGroupId: String, message: List<IObject<Any>>) -> Unit
+interface MediaGroupCallback : (String, List<IObject<Any>>, List<Message>) -> Unit
+
+private val logger = Logger.getLogger(BotIncomeMessagesListener::class.java.simpleName)
 
 class BotIncomeMessagesListener(
     bot: TelegramBot,
-    private val onMessage: UpdateCallback = { _, _ -> },
-    private val onMessageEdited: UpdateCallback = { _, _ -> },
-    private val onChannelPost: UpdateCallback = { _, _ -> },
-    private val onChannelPostEdited: UpdateCallback = { _, _ -> },
-    private val onInlineQuery: UpdateCallback = { _, _ -> },
-    private val onChosenInlineResult: UpdateCallback = { _, _ -> },
-    private val onCallbackQuery: UpdateCallback = { _, _ -> },
-    private val onShippingQuery: UpdateCallback = { _, _ -> },
-    private val onPreCheckoutQuery: UpdateCallback = { _, _ -> },
-    private val onMediaGroup: MediaGroupCallback? = null
-) {
-    init {
-        onMediaGroup ?.let {
-            onMediaGroup ->
-            bot.setUpdatesListener {
-                var read = 0
-                val groups = HashMap<String, MutableList<IObject<Any>>>()
-                it.forEach {
-                    update ->
-                    try {
-                        val updateIObject = update.toIObject()
-                        println("Update: $updateIObject")
-                        update.message() ?.let {
-                            message ->
-                            message.mediaGroupId() ?.let {
-                                groupId ->
-                                (groups[groupId] ?:let {
-                                    ArrayList<IObject<Any>>().apply {
-                                        groups[groupId] = this
-                                    }
-                                }).add(updateIObject)
-                            } ?:let {
-                                onMessage(update.updateId(), updateIObject)
-                            }
-                        } ?: update.editedMessage() ?.let {
-                            onMessageEdited(update.updateId(), updateIObject)
-                        } ?: update.channelPost() ?.let {
-                            onChannelPost(update.updateId(), updateIObject)
-                        } ?: update.editedChannelPost() ?.let {
-                            onChannelPostEdited(update.updateId(), updateIObject)
-                        } ?: update.inlineQuery() ?.let {
-                            onInlineQuery(update.updateId(), updateIObject)
-                        } ?: update.chosenInlineResult() ?.let {
-                            onChosenInlineResult(update.updateId(), updateIObject)
-                        } ?: update.callbackQuery() ?.let {
-                            onCallbackQuery(update.updateId(), updateIObject)
-                        } ?: update.shippingQuery() ?.let {
-                            onShippingQuery(update.updateId(), updateIObject)
-                        } ?: update.preCheckoutQuery() ?.let {
-                            onPreCheckoutQuery(update.updateId(), updateIObject)
-                        } ?:let {
-                            Logger.getGlobal().warning("${this::class.java.simpleName} can't handle update: $updateIObject")
-                        }
-                    } catch (e: Throwable) {
-                        return@setUpdatesListener read
-                    }
-                    read++
-                }
-                while (groups.isNotEmpty()) {
-                    val current = groups.entries.first()
-                    try {
-                        onMediaGroup(current.key, current.value)
-                    } catch (e: Exception) {
-                        continue
-                    }
-                    groups.remove(current.key)
-                }
-                UpdatesListener.CONFIRMED_UPDATES_ALL
-            }
-        } ?:let {
-            bot.setUpdatesListener {
-                var read = 0
-                it.forEach {
-                    update ->
-                    try {
-                        val updateIObject = update.toIObject()
-                        println("Update: $updateIObject")
-                        update.message() ?.let {
-                            onMessage(update.updateId(), updateIObject)
-                        } ?: update.editedMessage() ?.let {
-                            onMessageEdited(update.updateId(), updateIObject)
-                        } ?: update.channelPost() ?.let {
-                            onChannelPost(update.updateId(), updateIObject)
-                        } ?: update.editedChannelPost() ?.let {
-                            onChannelPostEdited(update.updateId(), updateIObject)
-                        } ?: update.inlineQuery() ?.let {
-                            onInlineQuery(update.updateId(), updateIObject)
-                        } ?: update.chosenInlineResult() ?.let {
-                            onChosenInlineResult(update.updateId(), updateIObject)
-                        } ?: update.callbackQuery() ?.let {
-                            onCallbackQuery(update.updateId(), updateIObject)
-                        } ?: update.shippingQuery() ?.let {
-                            onShippingQuery(update.updateId(), updateIObject)
-                        } ?: update.preCheckoutQuery() ?.let {
-                            onPreCheckoutQuery(update.updateId(), updateIObject)
-                        } ?:let {
-                            Logger.getGlobal().warning("${this::class.java.simpleName} can't handle update: $updateIObject")
-                        }
-                    } catch (e: Throwable) {
-                        return@setUpdatesListener read
-                    }
-                    read++
-                }
-                UpdatesListener.CONFIRMED_UPDATES_ALL
-            }
+    onMessage: UpdateCallback<Message>? = null,
+    onMessageEdited: UpdateCallback<Message>? = null,
+    onChannelPost: UpdateCallback<Message>? = null,
+    onChannelPostEdited: UpdateCallback<Message>? = null,
+    onInlineQuery: UpdateCallback<InlineQuery>? = null,
+    onChosenInlineResult: UpdateCallback<ChosenInlineResult>? = null,
+    onCallbackQuery: UpdateCallback<CallbackQuery>? = null,
+    onShippingQuery: UpdateCallback<ShippingQuery>? = null,
+    onPreCheckoutQuery: UpdateCallback<PreCheckoutQuery>? = null,
+    onMessageMediaGroup: MediaGroupCallback? = null,
+    onMessageEditedMediaGroup: MediaGroupCallback? = null,
+    onChannelPostMediaGroup: MediaGroupCallback? = null,
+    onChannelPostEditedMediaGroup: MediaGroupCallback? = null
+) : UpdatesListener {
+    private val handlerPreparators: List<UpdatesHandlerPreparator> = ArrayList<UpdatesHandlerPreparator>().also {
+        list ->
+        onMessageMediaGroup ?.let {
+            list.add(MessageMediaGroupUpdatesHandlerPreparator(it))
         }
+        onMessageEditedMediaGroup ?.let {
+            list.add(MessageEditedMediaGroupUpdatesHandlerPreparator(it))
+        }
+
+        onChannelPostMediaGroup ?.let {
+            list.add(ChannelPostMediaGroupUpdatesHandlerPreparator(it))
+        }
+
+        onChannelPostEditedMediaGroup ?.let {
+            list.add(ChannelPostEditedMediaGroupUpdatesHandlerPreparator(it))
+        }
+
+        onMessage ?. let {
+            list.add(OnMessageUpdatesHandlerPreparator(it))
+        }
+        onMessageEdited ?. let {
+            list.add(OnMessageEditUpdatesHandlerPreparator(it))
+        }
+        onChannelPost ?. let {
+            list.add(OnChannelPostUpdatesHandlerPreparator(it))
+        }
+        onChannelPostEdited ?. let {
+            list.add(OnChannelPostEditUpdatesHandlerPreparator(it))
+        }
+
+        onInlineQuery ?.let {
+            list.add(OnInlineQueryUpdatesHandlerPreparator(it))
+        }
+        onChosenInlineResult ?.let {
+            list.add(OnChosenInlineResultUpdatesHandlerPreparator(it))
+        }
+
+        onCallbackQuery ?.let {
+            list.add(OnCallbackQueryUpdatesHandlerPreparator(it))
+        }
+
+        onShippingQuery ?.let {
+            list.add(OnShippingQueryUpdatesHandlerPreparator(it))
+        }
+
+        onPreCheckoutQuery ?.let {
+            list.add(OnPreCheckoutQueryUpdatesHandlerPreparator(it))
+        }
+
+        logger.info("Added handlers: ${list.joinToString { it::class.java.simpleName }}")
+    }
+
+    init {
+        bot.setUpdatesListener(this)
+    }
+
+    override fun process(updates: MutableList<Update>?): Int {
+        return updates ?.let {
+            ArrayList(it).let {
+                updates ->
+                runBlocking {
+                    handlerPreparators.map {
+                        it(updates)
+                    }.map {
+                        launch(block = it)
+                    }.let {
+                        jobs ->
+                        jobs.forEach {
+                            launch {
+                                try {
+                                    it.join()
+                                } catch (e: Exception) {
+                                    jobs.forEach {
+                                        it.cancel(e)
+                                    }
+                                }
+                            }
+                        }
+                        jobs.firstOrNull {
+                            try {
+                                it.join()
+                                false
+                            } catch (e: Exception) {
+                                true
+                            }
+                        } ?. let {
+                            UpdatesListener.CONFIRMED_UPDATES_NONE
+                        }
+                    }
+                }
+            }
+        } ?: UpdatesListener.CONFIRMED_UPDATES_ALL
     }
 }

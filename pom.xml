@@ -5,7 +5,7 @@
 
     <groupId>com.github.insanusmokrassar</groupId>
     <artifactId>BotIncomeMessagesListener</artifactId>
-    <version>0.1b</version>
+    <version>0.2b</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -34,7 +34,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.2.41</kotlin.version>
+        <kotlin.version>1.2.50</kotlin.version>
         <kotlin.coroutines.version>0.22.5</kotlin.coroutines.version>
         <dokka.version>0.9.16</dokka.version>
         <gpg.version>1.6</gpg.version>
