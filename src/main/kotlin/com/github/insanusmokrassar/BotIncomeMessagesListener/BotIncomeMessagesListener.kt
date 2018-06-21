@@ -89,33 +89,36 @@ class BotIncomeMessagesListener(
             ArrayList(it).let {
                 updates ->
                 runBlocking {
-                    handlerPreparators.map {
-                        it(updates)
-                    }.map {
-                        launch(block = it)
-                    }.let {
-                        jobs ->
-                        jobs.forEach {
-                            launch {
+                    val jobs = ArrayList<Job>()
+                    jobs.addAll(
+                        handlerPreparators.map {
+                            it(updates)
+                        }.map {
+                            callback ->
+                            launch(start = CoroutineStart.LAZY) {
                                 try {
-                                    it.join()
-                                } catch (e: Exception) {
+                                    callback()
+                                } catch (e: Throwable) {
                                     jobs.forEach {
                                         it.cancel(e)
                                     }
+                                    throw e
                                 }
                             }
                         }
-                        jobs.firstOrNull {
-                            try {
-                                it.join()
-                                false
-                            } catch (e: Exception) {
-                                true
-                            }
-                        } ?. let {
-                            UpdatesListener.CONFIRMED_UPDATES_NONE
+                    )
+                    jobs.forEach {
+                        it.start()
+                    }
+                    jobs.firstOrNull {
+                        try {
+                            it.join()
+                            false
+                        } catch (e: Exception) {
+                            true
                         }
+                    } ?. let {
+                        UpdatesListener.CONFIRMED_UPDATES_NONE
                     }
                 }
             }
