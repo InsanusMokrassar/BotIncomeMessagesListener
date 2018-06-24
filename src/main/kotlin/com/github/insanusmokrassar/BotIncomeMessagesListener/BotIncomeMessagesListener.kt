@@ -13,7 +13,6 @@ interface MediaGroupCallback : (String, List<IObject<Any>>, List<Message>) -> Un
 private val logger = Logger.getLogger(BotIncomeMessagesListener::class.java.simpleName)
 
 class BotIncomeMessagesListener(
-    bot: TelegramBot,
     onMessage: UpdateCallback<Message>? = null,
     onMessageEdited: UpdateCallback<Message>? = null,
     onChannelPost: UpdateCallback<Message>? = null,
@@ -26,7 +25,8 @@ class BotIncomeMessagesListener(
     onMessageMediaGroup: MediaGroupCallback? = null,
     onMessageEditedMediaGroup: MediaGroupCallback? = null,
     onChannelPostMediaGroup: MediaGroupCallback? = null,
-    onChannelPostEditedMediaGroup: MediaGroupCallback? = null
+    onChannelPostEditedMediaGroup: MediaGroupCallback? = null,
+    bot: TelegramBot? = null
 ) : UpdatesListener {
     private val handlerPreparators: List<UpdatesHandlerPreparator> = ArrayList<UpdatesHandlerPreparator>().also {
         list ->
@@ -81,7 +81,7 @@ class BotIncomeMessagesListener(
     }
 
     init {
-        bot.setUpdatesListener(this)
+        bot ?. setUpdatesListener(this)
     }
 
     override fun process(updates: MutableList<Update>?): Int {

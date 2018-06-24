@@ -8,3 +8,7 @@
 ## 0.3b
 
 * Rewritten logic of events delivery
+
+## 0.4b
+
+* Now listener can be used without bot argument
