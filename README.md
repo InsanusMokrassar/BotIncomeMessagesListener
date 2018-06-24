@@ -33,18 +33,18 @@ will be wrapped into media group call back such as:
 <dependency>
     <groupId>com.github.insanusmokrassar</groupId>
     <artifactId>BotIncomeMessagesListener</artifactId>
-    <version>0.3b</version>
+    <version>0.4b</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```
-implementation 'com.github.insanusmokrassar:BotIncomeMessagesListener:0.3b'
+implementation 'com.github.insanusmokrassar:BotIncomeMessagesListener:0.4b'
 ```
 
 ### Old Gradle
 
 ```
-compile 'com.github.insanusmokrassar:BotIncomeMessagesListener:0.3b'
+compile 'com.github.insanusmokrassar:BotIncomeMessagesListener:0.4b'
 ```
