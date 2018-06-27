@@ -24,7 +24,7 @@ internal open class MediaGroupUpdatesHandlerPreparator (
         }
         return {
             mediaGroups.forEach {
-                k, v ->
+                (k, v) ->
                 callback(k, v.map { it.toIObject() }, v)
             }
         }

@@ -12,3 +12,7 @@
 ## 0.4b
 
 * Now listener can be used without bot argument
+
+## 0.5b
+
+* Fix for `MediaGroupUpdatesHandlerPreparator`

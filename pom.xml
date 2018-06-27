@@ -5,7 +5,7 @@
 
     <groupId>com.github.insanusmokrassar</groupId>
     <artifactId>BotIncomeMessagesListener</artifactId>
-    <version>0.4b</version>
+    <version>0.5b</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
