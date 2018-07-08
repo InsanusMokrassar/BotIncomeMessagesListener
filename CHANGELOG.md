@@ -16,3 +16,7 @@
 ## 0.5b
 
 * Fix for `MediaGroupUpdatesHandlerPreparator`
+
+## 0.6b
+
+* Add `BotIncomeMessagesListenerChannels`

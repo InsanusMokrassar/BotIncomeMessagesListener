@@ -20,7 +20,7 @@ internal open class StandardUpdatesHandlerPreparator<T> (
         }
         return {
             correctUpdates.forEach {
-                callback(it.first.updateId(), it.first.toIObject(), it.second)
+                callback(it.first.updateId(), it.second)
             }
         }
     }

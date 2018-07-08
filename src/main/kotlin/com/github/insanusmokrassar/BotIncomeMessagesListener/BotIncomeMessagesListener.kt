@@ -1,14 +1,11 @@
 package com.github.insanusmokrassar.BotIncomeMessagesListener
 
 import com.github.insanusmokrassar.BotIncomeMessagesListener.UpdatesHandlers.*
-import com.github.insanusmokrassar.IObjectK.interfaces.IObject
 import com.pengrad.telegrambot.TelegramBot
 import com.pengrad.telegrambot.UpdatesListener
 import com.pengrad.telegrambot.model.*
 import kotlinx.coroutines.experimental.*
 import java.util.logging.Logger
-
-interface MediaGroupCallback : (String, List<IObject<Any>>, List<Message>) -> Unit
 
 private val logger = Logger.getLogger(BotIncomeMessagesListener::class.java.simpleName)
 
