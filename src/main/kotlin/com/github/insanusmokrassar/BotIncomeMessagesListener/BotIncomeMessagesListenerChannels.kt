@@ -4,22 +4,23 @@ import com.pengrad.telegrambot.TelegramBot
 import com.pengrad.telegrambot.UpdatesListener
 import com.pengrad.telegrambot.model.*
 import kotlinx.coroutines.experimental.channels.Channel
+import kotlinx.coroutines.experimental.channels.SendChannel
 import kotlinx.coroutines.experimental.runBlocking
 
 class BotIncomeMessagesListenerChannels(
-    onMessageChannel: Channel<Pair<Int, Message>>? = null,
-    onMessageEditedChannel: Channel<Pair<Int, Message>>? = null,
-    onChannelPostChannel: Channel<Pair<Int, Message>>? = null,
-    onChannelPostEditedChannel: Channel<Pair<Int, Message>>? = null,
-    onInlineQueryChannel: Channel<Pair<Int, InlineQuery>>? = null,
-    onChosenInlineResultChannel: Channel<Pair<Int, ChosenInlineResult>>? = null,
-    onCallbackQueryChannel: Channel<Pair<Int, CallbackQuery>>? = null,
-    onShippingQueryChannel: Channel<Pair<Int, ShippingQuery>>? = null,
-    onPreCheckoutQueryChannel: Channel<Pair<Int, PreCheckoutQuery>>? = null,
-    onMessageMediaGroupChannel: Channel<Pair<String, List<Message>>>? = null,
-    onMessageEditedMediaGroupChannel: Channel<Pair<String, List<Message>>>? = null,
-    onChannelPostMediaGroupChannel: Channel<Pair<String, List<Message>>>? = null,
-    onChannelPostEditedMediaGroupChannel: Channel<Pair<String, List<Message>>>? = null,
+    onMessageChannel: SendChannel<Pair<Int, Message>>? = null,
+    onMessageEditedChannel: SendChannel<Pair<Int, Message>>? = null,
+    onChannelPostChannel: SendChannel<Pair<Int, Message>>? = null,
+    onChannelPostEditedChannel: SendChannel<Pair<Int, Message>>? = null,
+    onInlineQueryChannel: SendChannel<Pair<Int, InlineQuery>>? = null,
+    onChosenInlineResultChannel: SendChannel<Pair<Int, ChosenInlineResult>>? = null,
+    onCallbackQueryChannel: SendChannel<Pair<Int, CallbackQuery>>? = null,
+    onShippingQueryChannel: SendChannel<Pair<Int, ShippingQuery>>? = null,
+    onPreCheckoutQueryChannel: SendChannel<Pair<Int, PreCheckoutQuery>>? = null,
+    onMessageMediaGroupChannel: SendChannel<Pair<String, List<Message>>>? = null,
+    onMessageEditedMediaGroupChannel: SendChannel<Pair<String, List<Message>>>? = null,
+    onChannelPostMediaGroupChannel: SendChannel<Pair<String, List<Message>>>? = null,
+    onChannelPostEditedMediaGroupChannel: SendChannel<Pair<String, List<Message>>>? = null,
     bot: TelegramBot? = null
 ) : UpdatesListener by BotIncomeMessagesListener(
     onMessageChannel ?.let {

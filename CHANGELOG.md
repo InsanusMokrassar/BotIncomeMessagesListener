@@ -20,3 +20,7 @@
 ## 0.6b
 
 * Add `BotIncomeMessagesListenerChannels`
+
+## 0.7b
+
+*  Hotfix for `0.6b`
