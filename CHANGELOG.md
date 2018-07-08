@@ -24,3 +24,7 @@
 ## 0.7b
 
 *  Hotfix for `0.6b`
+
+## 0.8b
+
+* Now `UpdateCallback` and `MediaGroupCallback` are typealiases

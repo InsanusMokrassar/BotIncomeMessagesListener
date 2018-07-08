@@ -2,7 +2,6 @@ package com.github.insanusmokrassar.BotIncomeMessagesListener.UpdatesHandlers
 
 import com.github.insanusmokrassar.BotIncomeMessagesListener.UpdateCallback
 import com.github.insanusmokrassar.BotIncomeMessagesListener.UpdatesHandlerPreparator
-import com.github.insanusmokrassar.IObjectKRealisations.toIObject
 import com.pengrad.telegrambot.model.*
 import kotlinx.coroutines.experimental.CoroutineScope
 

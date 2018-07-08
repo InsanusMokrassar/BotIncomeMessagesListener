@@ -3,7 +3,6 @@ package com.github.insanusmokrassar.BotIncomeMessagesListener
 import com.pengrad.telegrambot.TelegramBot
 import com.pengrad.telegrambot.UpdatesListener
 import com.pengrad.telegrambot.model.*
-import kotlinx.coroutines.experimental.channels.Channel
 import kotlinx.coroutines.experimental.channels.SendChannel
 import kotlinx.coroutines.experimental.runBlocking
 
@@ -29,7 +28,7 @@ class BotIncomeMessagesListenerChannels(
             runBlocking {
                 it.send(updateId to message)
             }
-        } as UpdateCallback<Message>
+        }
     },
     onMessageEditedChannel ?.let {
         {
@@ -37,7 +36,7 @@ class BotIncomeMessagesListenerChannels(
             runBlocking {
                 it.send(updateId to message)
             }
-        } as UpdateCallback<Message>
+        }
     },
     onChannelPostChannel ?.let {
         {
@@ -45,7 +44,7 @@ class BotIncomeMessagesListenerChannels(
             runBlocking {
                 it.send(updateId to message)
             }
-        } as UpdateCallback<Message>
+        }
     },
     onChannelPostEditedChannel ?.let {
         {
@@ -53,7 +52,7 @@ class BotIncomeMessagesListenerChannels(
             runBlocking {
                 it.send(updateId to message)
             }
-        } as UpdateCallback<Message>
+        }
     },
     onInlineQueryChannel ?.let {
         {
@@ -61,7 +60,7 @@ class BotIncomeMessagesListenerChannels(
             runBlocking {
                 it.send(updateId to query)
             }
-        } as UpdateCallback<InlineQuery>
+        }
     },
     onChosenInlineResultChannel ?.let {
         {
@@ -69,7 +68,7 @@ class BotIncomeMessagesListenerChannels(
             runBlocking {
                 it.send(updateId to result)
             }
-        } as UpdateCallback<ChosenInlineResult>
+        }
     },
     onCallbackQueryChannel ?.let {
         {
@@ -77,7 +76,7 @@ class BotIncomeMessagesListenerChannels(
             runBlocking {
                 it.send(updateId to query)
             }
-        } as UpdateCallback<CallbackQuery>
+        }
     },
     onShippingQueryChannel ?.let {
         {
@@ -85,7 +84,7 @@ class BotIncomeMessagesListenerChannels(
             runBlocking {
                 it.send(updateId to query)
             }
-        } as UpdateCallback<ShippingQuery>
+        }
     },
     onPreCheckoutQueryChannel ?.let {
         {
@@ -93,7 +92,7 @@ class BotIncomeMessagesListenerChannels(
             runBlocking {
                 it.send(updateId to query)
             }
-        } as UpdateCallback<PreCheckoutQuery>
+        }
     },
     onMessageMediaGroupChannel ?.let {
         {
@@ -101,7 +100,7 @@ class BotIncomeMessagesListenerChannels(
             runBlocking {
                 it.send(mediaGroupId to messages)
             }
-        } as MediaGroupCallback
+        }
     },
     onMessageEditedMediaGroupChannel ?.let {
         {
@@ -109,7 +108,7 @@ class BotIncomeMessagesListenerChannels(
             runBlocking {
                 it.send(mediaGroupId to messages)
             }
-        } as MediaGroupCallback
+        }
     },
     onChannelPostMediaGroupChannel ?.let {
         {
@@ -117,7 +116,7 @@ class BotIncomeMessagesListenerChannels(
             runBlocking {
                 it.send(mediaGroupId to messages)
             }
-        } as MediaGroupCallback
+        }
     },
     onChannelPostEditedMediaGroupChannel ?.let {
         {
@@ -125,7 +124,7 @@ class BotIncomeMessagesListenerChannels(
             runBlocking {
                 it.send(mediaGroupId to messages)
             }
-        } as MediaGroupCallback
+        }
     },
     bot
 )
