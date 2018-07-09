@@ -28,3 +28,9 @@
 ## 0.8b
 
 * Now `UpdateCallback` and `MediaGroupCallback` are typealiases
+
+## 0.9b
+
+* Remove chanelled bot income lostener
+* Replace preparators
+* Add `Callbacks` which just send broadcasts on any event

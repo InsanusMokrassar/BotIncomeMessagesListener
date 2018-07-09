@@ -1,6 +1,6 @@
 package com.github.insanusmokrassar.BotIncomeMessagesListener
 
-import com.github.insanusmokrassar.BotIncomeMessagesListener.UpdatesHandlers.*
+import com.github.insanusmokrassar.BotIncomeMessagesListener.UpdatesHandlerPreparators.*
 import com.pengrad.telegrambot.TelegramBot
 import com.pengrad.telegrambot.UpdatesListener
 import com.pengrad.telegrambot.model.*

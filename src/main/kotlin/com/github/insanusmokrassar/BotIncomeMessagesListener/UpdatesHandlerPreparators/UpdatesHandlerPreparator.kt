@@ -1,4 +1,4 @@
-package com.github.insanusmokrassar.BotIncomeMessagesListener
+package com.github.insanusmokrassar.BotIncomeMessagesListener.UpdatesHandlerPreparators
 
 import com.pengrad.telegrambot.model.Update
 import kotlinx.coroutines.experimental.CoroutineScope
