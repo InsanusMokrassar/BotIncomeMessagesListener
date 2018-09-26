@@ -34,3 +34,10 @@
 * Remove chanelled bot income lostener
 * Replace preparators
 * Add `Callbacks` which just send broadcasts on any event
+
+## 0.9
+
+* Kotlin `1.2.50` -> `1.2.61`
+* Kotlin Coroutines `0.22.5` -> `0.25.3`
+* Java `1.7` -> `1.8`
+* All broadcast channels now are conflated

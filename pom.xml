@@ -5,7 +5,7 @@
 
     <groupId>com.github.insanusmokrassar</groupId>
     <artifactId>BotIncomeMessagesListener</artifactId>
-    <version>0.9b</version>
+    <version>0.9</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -34,16 +34,16 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.2.50</kotlin.version>
-        <kotlin.coroutines.version>0.22.5</kotlin.coroutines.version>
+        <kotlin.version>1.2.61</kotlin.version>
+        <kotlin.coroutines.version>0.25.3</kotlin.coroutines.version>
         <dokka.version>0.9.16</dokka.version>
         <gpg.version>1.6</gpg.version>
         <assembly.version>2.6</assembly.version>
         <source.version>3.0.1</source.version>
         <jar.version>3.0.2</jar.version>
         <gpg.passphraseServerId>bintray-insanusmokrassar-StandardRepository</gpg.passphraseServerId>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <pluginRepositories>
@@ -194,15 +194,9 @@
             <version>${kotlin.coroutines.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-test-junit</artifactId>
-            <version>${kotlin.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>com.github.pengrad</groupId>
             <artifactId>java-telegram-bot-api</artifactId>
-            <version>3.6.0</version>
+            <version>4.1.0</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->

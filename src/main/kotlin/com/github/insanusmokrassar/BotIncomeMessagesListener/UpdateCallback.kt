@@ -1,6 +1,7 @@
 package com.github.insanusmokrassar.BotIncomeMessagesListener
 
 import kotlinx.coroutines.experimental.channels.BroadcastChannel
+import kotlinx.coroutines.experimental.channels.Channel
 import kotlinx.coroutines.experimental.launch
 
 /**
@@ -8,11 +9,9 @@ import kotlinx.coroutines.experimental.launch
  */
 typealias UpdateCallback<T> = (Int, T) -> Unit
 
-private const val broadcastSubscribersCount = 256
-
 class UpdateCallbackChannel<T> : UpdateCallback<T> {
     val broadcastChannel = BroadcastChannel<Pair<Int, T>>(
-        broadcastSubscribersCount
+        Channel.CONFLATED
     )
 
     override fun invoke(p1: Int, p2: T) {
