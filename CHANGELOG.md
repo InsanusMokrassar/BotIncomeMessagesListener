@@ -41,3 +41,8 @@
 * Kotlin Coroutines `0.22.5` -> `0.25.3`
 * Java `1.7` -> `1.8`
 * All broadcast channels now are conflated
+
+## 0.10
+
+* Kotlin `1.2.61` -> `1.3.0`
+* Kotlin Coroutines `0.25.3` -> `1.0.0`

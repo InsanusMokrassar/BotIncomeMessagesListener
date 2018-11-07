@@ -4,7 +4,7 @@ import com.github.insanusmokrassar.BotIncomeMessagesListener.UpdatesHandlerPrepa
 import com.pengrad.telegrambot.TelegramBot
 import com.pengrad.telegrambot.UpdatesListener
 import com.pengrad.telegrambot.model.*
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 import java.util.logging.Logger
 
 private val logger = Logger.getLogger(BotIncomeMessagesListener::class.java.simpleName)
@@ -97,7 +97,8 @@ class BotIncomeMessagesListener(
                                     callback()
                                 } catch (e: Throwable) {
                                     jobs.forEach {
-                                        it.cancel(e)
+                                        job ->
+                                        job.cancel()
                                     }
                                     throw e
                                 }

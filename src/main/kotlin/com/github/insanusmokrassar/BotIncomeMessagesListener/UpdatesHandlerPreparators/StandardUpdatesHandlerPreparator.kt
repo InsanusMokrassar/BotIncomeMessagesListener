@@ -2,7 +2,7 @@ package com.github.insanusmokrassar.BotIncomeMessagesListener.UpdatesHandlerPrep
 
 import com.github.insanusmokrassar.BotIncomeMessagesListener.UpdateCallback
 import com.pengrad.telegrambot.model.*
-import kotlinx.coroutines.experimental.CoroutineScope
+import kotlinx.coroutines.CoroutineScope
 
 internal open class StandardUpdatesHandlerPreparator<T> (
     private val callback: UpdateCallback<T>,

@@ -3,7 +3,7 @@ package com.github.insanusmokrassar.BotIncomeMessagesListener.UpdatesHandlerPrep
 import com.github.insanusmokrassar.BotIncomeMessagesListener.MediaGroupCallback
 import com.pengrad.telegrambot.model.Message
 import com.pengrad.telegrambot.model.Update
-import kotlinx.coroutines.experimental.CoroutineScope
+import kotlinx.coroutines.CoroutineScope
 
 internal open class MediaGroupUpdatesHandlerPreparator (
     private val callback: MediaGroupCallback,
